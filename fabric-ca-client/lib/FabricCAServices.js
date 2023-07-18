@@ -78,6 +78,7 @@ class FabricCAServices extends BaseClient {
 			protocol: endpoint.protocol,
 			hostname: endpoint.hostname,
 			port: endpoint.port,
+			basePath: endpoint.pathname,
 			tlsOptions: _tlsOptions
 		}, this.getCryptoSuite());
 

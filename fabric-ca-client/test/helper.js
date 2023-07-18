@@ -101,8 +101,8 @@ describe('Helper', () => {
 		});
 
 		it('should return a URL Object on success', () => {
-			const result = Helper.parseURL('http://hyperledger.com:4200');
-			result.should.deep.equal({protocol: 'http', port: 4200, hostname: 'hyperledger.com'});
+			const result = Helper.parseURL('http://hyperledger.com:4200/path/to/something');
+			result.should.deep.equal({protocol: 'http', port: 4200, hostname: 'hyperledger.com', pathname: '/path/to/something'});
 		});
 
 	});

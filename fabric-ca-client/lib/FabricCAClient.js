@@ -28,6 +28,7 @@ const FabricCAClient = class {
 	 * @property {number} [port] - The port of the Fabric CA server endpoint, Default is 7054
 	 * @property {TLSOptions} [tlsOptions] - The TLS settings to use when the Fabric CA endpoint uses "https"
 	 * @property {string} [caname] - The optional name of the CA. Fabric-ca servers support multiple Certificate Authorities from
+	 * @property {string} [basePath] - The optional base URL path to send all requests to. This can be used to support reverse proxies
 	 *  a single server. If omitted or null or an empty string, then the default CA is the target of requests
 	 */
 
@@ -66,7 +67,9 @@ const FabricCAClient = class {
 				this._tlsOptions.trustedRoots = [];
 			}
 		}
-		this._baseAPI = '/api/v1/';
+		const normalizedBasePath = (connect_opts.basePath ?? '/').replace(/^[\s\/]*(.*?)[\s\/]*$/, '/$1');
+		// create a variable normalizedBasePath that takes connect_opts.basePath and makes sure it has no trailing slashes and only a leading slash if it's not empty
+		this._baseAPI = `${normalizedBasePath}${normalizedBasePath === '/' ? '' : '/'}api/v1/`;
 
 		this._cryptoPrimitives = cryptoPrimitives;
 

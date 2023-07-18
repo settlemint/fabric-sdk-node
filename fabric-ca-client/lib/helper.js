@@ -61,6 +61,9 @@ const parseURL = (url) => {
 				endpoint.port = parseInt(purl.port);
 			}
 
+			if (purl.pathname) {
+				endpoint.pathname = purl.pathname;
+			}
 		} else {
 			throw new Error('InvalidURL: missing hostname.');
 		}

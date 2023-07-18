@@ -120,6 +120,21 @@ describe('FabricCAClient', () => {
 			client._tlsOptions.should.deep.equal(opts);
 		});
 
+		it('should take basePath into account for _baseAPI if provided', () => {
+			const validateStub = sinon.stub();
+			revert = FabricCAClientRewire.__set__('FabricCAClient.prototype._validateConnectionOpts', validateStub);
+
+			const connect_opts = {
+				caname: 'test-ca-name',
+				hostname: 'testHost',
+				basePath: '/such/path',
+			};
+
+			const client = new FabricCAClientRewire(connect_opts, cryptoPrimitives);
+
+			client._baseAPI.should.equal('/such/path/api/v1/');
+		});
+
 		it('should default _tlsOptions.verify if not provided in opts', () => {
 			const validateStub = sinon.stub();
 			revert = FabricCAClientRewire.__set__('FabricCAClient.prototype._validateConnectionOpts', validateStub);
