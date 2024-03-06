@@ -23,20 +23,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 10, 12, 14, 16, 18 ]
+        node-version:
+          - 14
+          - 16
+          - 18
+          - 20
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.checkout-ref }}
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Update npm
-        run: |
-          npm update --global npm
-          npm --version
       - name: Install SoftHSM
         run: |
           sudo apt-get install softhsm2
@@ -49,13 +49,13 @@ jobs:
       - run: npm test
       - name: "Archive unit test debug log"
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.node-version }}-unit-test-debug.log
           path: test/temp/debug.log
       - name: "Archive scenario test debug log"
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.node-version }}-cucumber-debug.log
           path: test/temp/debugc.log

@@ -5,7 +5,7 @@
  */
 
 import {BlockEvent} from '../../events';
-import * as Long from 'long';
+import Long = require('long');
 
 export class OrderedBlockQueue {
 	private readonly queue = new Map<string, BlockEvent>();
