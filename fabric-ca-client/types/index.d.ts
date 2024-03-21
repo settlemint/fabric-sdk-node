@@ -6,7 +6,7 @@ import {ICryptoSuite, ICryptoKey, User} from 'fabric-common';
 
 declare class FabricCAServices {
 	constructor(url: string | FabricCAServices.IFabricCAService,
-		tlsOptions?: FabricCAServices.TLSOptions, caName?: string, cryptoSuite?: ICryptoSuite);
+		tlsOptions?: FabricCAServices.TLSOptions, caName?: string, cryptoSuite?: ICryptoSuite, customHeaders?: Record<string, string>);
 
 	getCaName(): string;
 
