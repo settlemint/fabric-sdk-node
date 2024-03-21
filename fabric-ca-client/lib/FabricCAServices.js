@@ -82,7 +82,7 @@ class FabricCAServices extends BaseClient {
 			hostname: endpoint.hostname,
 			port: endpoint.port,
 			tlsOptions: _tlsOptions,
-			customHeaders, _customHeaders
+			customHeaders: _customHeaders
 		}, this.getCryptoSuite());
 
 		logger.debug('Successfully constructed Fabric CA service client: endpoint - %j', endpoint);
