@@ -280,6 +280,8 @@ const FabricCAClient = class {
 				: {}
 		);
 		Object.assign(requestOptions, extraRequestOptions);
+		logger.debug(`Executing request: ${util.inspect(requestOptions)}`);
+
 		return new Promise(((resolve, reject) => {
 
 			const request = this._httpClient.request(requestOptions, (response) => {
