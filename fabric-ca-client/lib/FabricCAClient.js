@@ -29,6 +29,7 @@ const FabricCAClient = class {
 	 * @property {TLSOptions} [tlsOptions] - The TLS settings to use when the Fabric CA endpoint uses "https"
 	 * @property {string} [caname] - The optional name of the CA. Fabric-ca servers support multiple Certificate Authorities from
 	 *  a single server. If omitted or null or an empty string, then the default CA is the target of requests
+	 * @property {Object} customHeaders - The optional custom headers to add to the request
 	 */
 
 	/**
@@ -47,6 +48,7 @@ const FabricCAClient = class {
 		this._caName = connect_opts.caname;
 		this._httpClient = (connect_opts.protocol === 'http') ? http : https;
 		this._hostname = connect_opts.hostname;
+		this._customHeaders = connect_opts.customHeaders || {};
 		if (connect_opts.port) {
 			this._port = connect_opts.port;
 		} else {
@@ -264,11 +266,19 @@ const FabricCAClient = class {
 			rejectUnauthorized: this._tlsOptions.verify,
 			timeout: CONNECTION_TIMEOUT
 		};
-		if (signingIdentity) {
-			requestOptions.headers = {
-				Authorization: this.generateAuthToken(requestObj, signingIdentity, path, http_method)
-			};
-		}
+		requestOptions.headers = Object.assign(
+			this._customHeaders,
+			signingIdentity
+				? {
+					Authorization: this.generateAuthToken(
+						requestObj,
+						signingIdentity,
+						path,
+						http_method
+					),
+				}
+				: {}
+		);
 		Object.assign(requestOptions, extraRequestOptions);
 		return new Promise(((resolve, reject) => {
 

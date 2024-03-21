@@ -46,20 +46,23 @@ class FabricCAServices extends BaseClient {
 	 * <br> - crypto-keysize: security level, or key size, to use with the digital signature public key algorithm. Currently ECDSA
 	 *  is supported and the valid key sizes are 256 and 384
 	 * <br> - crypto-hash-algo: hashing algorithm
+	 * @property {object} customHeaders - The optional custom headers to add to the request
 	 */
-	constructor(url, tlsOptions, caName, cryptoSuite) {
+	constructor(url, tlsOptions, caName, cryptoSuite, customHeaders) {
 		super();
-		let _url, _tlsOptions, _caName, _cryptoSuite;
+		let _url, _tlsOptions, _caName, _cryptoSuite, _customHeaders;
 		if (typeof url === 'object') {
 			_url = url.url;
 			_tlsOptions = url.tlsOptions;
 			_caName = url.caName;
 			_cryptoSuite = url.cryptoSuite;
+			_customHeaders = url.customHeaders;
 		} else {
 			_url = url;
 			_tlsOptions = tlsOptions;
 			_caName = caName;
 			_cryptoSuite = cryptoSuite;
+			_customHeaders = customHeaders;
 		}
 
 		this.caName = _caName;
@@ -78,7 +81,8 @@ class FabricCAServices extends BaseClient {
 			protocol: endpoint.protocol,
 			hostname: endpoint.hostname,
 			port: endpoint.port,
-			tlsOptions: _tlsOptions
+			tlsOptions: _tlsOptions,
+			customHeaders, _customHeaders
 		}, this.getCryptoSuite());
 
 		logger.debug('Successfully constructed Fabric CA service client: endpoint - %j', endpoint);
