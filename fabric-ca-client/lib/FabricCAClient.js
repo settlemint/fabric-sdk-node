@@ -267,20 +267,20 @@ const FabricCAClient = class {
 			timeout: CONNECTION_TIMEOUT
 		};
 		logger.debug(`signingIdentity: ${signingIdentity}`);
-		// requestOptions.headers = Object.assign(
-		// 	{},
-		// 	this._customHeaders,
-		// 	signingIdentity
-		// 		? {
-		// 			Authorization: this.generateAuthToken(
-		// 				requestObj,
-		// 				signingIdentity,
-		// 				path,
-		// 				http_method
-		// 			),
-		// 		}
-		// 		: {}
-		// );
+		requestOptions.headers = Object.assign(
+			{},
+			this._customHeaders,
+			signingIdentity
+				? {
+					Authorization: this.generateAuthToken(
+						requestObj,
+						signingIdentity,
+						path,
+						http_method
+					),
+				}
+				: {}
+		);
 		Object.assign(requestOptions, extraRequestOptions);
 		logger.debug(`Executing request: ${util.inspect(requestOptions)}`);
 
