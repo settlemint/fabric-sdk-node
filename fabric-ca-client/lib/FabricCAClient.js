@@ -266,7 +266,9 @@ const FabricCAClient = class {
 			rejectUnauthorized: this._tlsOptions.verify,
 			timeout: CONNECTION_TIMEOUT
 		};
+		logger.debug(`signingIdentity: ${signingIdentity}`);
 		requestOptions.headers = Object.assign(
+			{},
 			this._customHeaders,
 			signingIdentity
 				? {
