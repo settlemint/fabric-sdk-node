@@ -39,7 +39,7 @@
     "testHeadless": "run-s cleanUp compile lint unitTest:all",
     "tapeAndCucumber": "run-s tapeIntegration dockerClean cucumberScenario"
   },
-  "devDependencies": {
+  "dependencies": {
     "@cucumber/cucumber": "^7.3.2",
     "@cucumber/pretty-formatter": "^1.0.0-alpha.1",
     "@tsconfig/node14": "^14.1.0",
